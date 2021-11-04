@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import fetch from "cross-fetch";
 import {
   BlockJson,
   TransactionJson,
@@ -82,16 +82,12 @@ export class Provider {
    * @returns Result of jsonrpc response
    */
   async call<T = unknown>(method: string, params: unknown): Promise<T> {
-    let response: AxiosResponse<{
+    let json: {
       result?: T;
-      error?: { message: string };
-    }> = {
-      data: {},
-      status: 0,
-      statusText: "",
-      headers: {},
-      config: {},
-    };
+      error?: {
+        message: string;
+      }
+    } = {};
 
     let success = false;
 
@@ -106,20 +102,11 @@ export class Provider {
         };
 
         const url = this.rpcNodes[this.currentNodeId];
-
-        // TODO: search conditional to enable fetch for Browser
-        /* const response = await fetch(url, {
+        const response = await fetch(url, {
           method: "POST",
           body: JSON.stringify(data),
         });
-        const json = await response.json();
-        if (json.error && json.error.message) throw new Error(json.error.message);
-        return json.result; */
-
-        response = await axios.post<{
-          result?: T;
-          error?: { message: string };
-        }>(url, data, { validateStatus: (s) => s < 400 });
+        json = await response.json();
         success = true;
       } catch (e) {
         const currentNode = this.rpcNodes[this.currentNodeId];
@@ -129,8 +116,8 @@ export class Provider {
         if (abort) throw e;
       }
     }
-    if (response.data.error) throw new Error(response.data.error.message);
-    return response.data.result as T;
+    if (json.error && json.error.message) throw new Error(json.error.message);
+    return json.result as T;
   }
 
   /**

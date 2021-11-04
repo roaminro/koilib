@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import fetch from "cross-fetch";
 import crypto from "crypto";
 import { Type } from "protobufjs";
 import { Signer } from "../src/Signer";
@@ -17,7 +17,7 @@ import {
   TransactionJson,
 } from "../src";
 
-const mockAxiosGet = jest.spyOn(axios, "get");
+const mockFetch = jest.spyOn(fetch, "get");
 const mockAxiosPost = jest.spyOn(axios, "post");
 
 mockAxiosGet.mockImplementation(
@@ -316,7 +316,7 @@ describe("Wallet and Contract", () => {
       return axiosResponse({ nonce: "0" });
     });
 
-    const { operation, transaction, result } = await koinContract.deploy();
+    const { operation, transaction, transactionResponse } = await koinContract.deploy();
 
     expect(operation).toStrictEqual({
       uploadContract: {
@@ -331,6 +331,6 @@ describe("Wallet and Contract", () => {
       signatureData: expect.any(String) as string,
     } as TransactionJson);
 
-    expect(result).toBeDefined();
+    expect(transactionResponse).toBeDefined();
   });
 });
