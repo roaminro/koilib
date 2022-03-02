@@ -342,14 +342,17 @@ export interface BlockHeaderJson {
   previous?: string;
   height?: string;
   timestamp?: string;
+  previous_state_merkle_root?: string;
+  transaction_merkle_root?: string;
+  signer?: string;
   [x: string]: unknown;
 }
 
 export interface BlockJson {
   id?: string;
   header?: BlockHeaderJson;
-  signature?: string;
   transactions?: TransactionJson[];
+  signature?: string;
   [x: string]: unknown;
 }
 export interface ValueType {
