@@ -221,7 +221,6 @@ export class Serializer {
             protoBuf
           );
         } catch (error) {
-          console.error(error);
           valueBtypeEncoded[name] = valueBtypeDecoded[name];
         }
 
