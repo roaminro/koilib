@@ -1,7 +1,7 @@
 node_modules
 docs
 lib/*
-dist/*
+#dist/*
 !dist/koinos.js
 !dist/koinos.min.js
 !dist/koinos.min.js.LICENSE.txt
