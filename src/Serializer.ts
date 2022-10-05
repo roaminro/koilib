@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { Root, Type, INamespace } from "protobufjs/light";
+import { Root, Type, INamespace, Enum } from "protobufjs/light";
 import { TypeField } from "./interface";
 import { btypeDecodeValue, btypeEncodeValue, decodeBase64url } from "./utils";
 
@@ -130,15 +130,17 @@ export class Serializer {
           (itemEncoded) => {
             // custom objects
             if (!nativeTypes.includes(type)) {
-              try {
-                const protoBuf = this.root.lookupType(type);
-                return this.btypeDecode(
-                  itemEncoded as Record<string, unknown>,
-                  protoBuf
-                );
-              } catch (error) {
+              const protoBuf = this.root.lookupTypeOrEnum(type);
+
+              // if Enum, return its number representation for now
+              if (protoBuf instanceof Enum) {
                 return itemEncoded;
               }
+
+              return this.btypeDecode(
+                itemEncoded as Record<string, unknown>,
+                protoBuf
+              );
             }
             // native types
             return btypeDecodeValue(itemEncoded, typeField);
@@ -149,14 +151,16 @@ export class Serializer {
 
       // custom objects
       if (!nativeTypes.includes(type)) {
-        try {
-          const protoBuf = this.root.lookupType(type);
+        const protoBuf = this.root.lookupTypeOrEnum(type);
+
+        // if Enum, return its number representation for now
+        if (protoBuf instanceof Enum) {
+          valueBtypeDecoded[name] = valueBtypeEncoded[name];
+        } else {
           valueBtypeDecoded[name] = this.btypeDecode(
             valueBtypeEncoded[name] as Record<string, unknown>,
             protoBuf
           );
-        } catch (error) {
-          valueBtypeDecoded[name] = valueBtypeEncoded[name];
         }
         return;
       }
@@ -195,15 +199,17 @@ export class Serializer {
           (itemDecoded) => {
             // custom objects
             if (!nativeTypes.includes(type)) {
-              try {
-                const protoBuf = this.root.lookupType(type);
-                return this.btypeEncode(
-                  itemDecoded as Record<string, unknown>,
-                  protoBuf
-                );
-              } catch (error) {
+              const protoBuf = this.root.lookupTypeOrEnum(type);
+
+              // if Enum, return its number representation for now
+              if (protoBuf instanceof Enum) {
                 return itemDecoded;
               }
+
+              return this.btypeEncode(
+                itemDecoded as Record<string, unknown>,
+                protoBuf
+              );
             }
             // native types
             return btypeEncodeValue(itemDecoded, typeField);
@@ -214,14 +220,16 @@ export class Serializer {
 
       // custom objects
       if (!nativeTypes.includes(type)) {
-        try {
-          const protoBuf = this.root.lookupType(type);
+        const protoBuf = this.root.lookupTypeOrEnum(type);
+
+        // if Enum, return its number representation for now
+        if (protoBuf instanceof Enum) {
+          valueBtypeEncoded[name] = valueBtypeDecoded[name];
+        } else {
           valueBtypeEncoded[name] = this.btypeEncode(
             valueBtypeDecoded[name] as Record<string, unknown>,
             protoBuf
           );
-        } catch (error) {
-          valueBtypeEncoded[name] = valueBtypeDecoded[name];
         }
 
         return;
