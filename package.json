@@ -38,7 +38,8 @@
     "test": "jest",
     "test:unit": "jest wallet.spec.ts",
     "test:e2e": "jest wallet.e2e-spec.ts",
-    "test:chain": "jest chain.e2e-spec.ts"
+    "test:chain": "jest chain.e2e-spec.ts",
+    "build:deno": "rimraf lib && tsc -p tsconfig.node.json && denoify"
   },
   "exports": {
     "./package.json": "./package.json",
@@ -60,6 +61,7 @@
     "@typescript-eslint/parser": "^5.35.1",
     "audit-ci": "^6.3.0",
     "copyfiles": "^2.4.1",
+    "denoify": "^1.5.7",
     "dotenv": "^16.0.1",
     "eslint": "^8.22.0",
     "eslint-config-airbnb-typescript": "^17.0.0",

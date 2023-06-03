@@ -1,0 +1,11 @@
+{
+  "imports": {
+    "sha256": "https://esm.sh/@noble/hashes@1.1.2/sha256",
+    "protobufjs": "https://esm.sh/protobufjs@7.2.3",
+    "fetch": "https://esm.sh/cross-fetch@3.1.5",
+    "koinos-pb-to-proto": "https://esm.sh/@roamin/koinos-pb-to-proto@0.0.3",
+    "secp256k1": "https://esm.sh/@noble/secp256k1@1.6.3",
+    "multibase": "https://esm.sh/multibase@4.0.6",
+    "ripemd160": "https://esm.sh/@noble/hashes@1.1.2/ripemd160"
+  }
+}
