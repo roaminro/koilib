@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
-import { sha256 } from "https://esm.sh/@noble/hashes@1.1.2/sha256";
-import * as secp from "https://esm.sh/@noble/secp256k1@1.6.3";
+import { sha256, secp } from "./deps.ts";
 import { Provider } from "./Provider.ts";
 import {
   TransactionJson,

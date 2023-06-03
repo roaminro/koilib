@@ -1,4 +1,4 @@
-import { INamespace } from "https://esm.sh/protobufjs@7.2.3";
+import { INamespace } from "./deps.ts";
 import { Serializer } from "./Serializer.ts";
 
 /**

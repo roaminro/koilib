@@ -1,4 +1,4 @@
-import fetch from "https://esm.sh/cross-fetch@3.1.5";
+import { fetch, protobufjs } from "./deps.ts";
 import {
   BlockJson,
   TransactionJson,
@@ -9,7 +9,6 @@ import {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import KoinosProto from "./jsonDescriptors/koinos-proto.json" assert { type: "json" };
 import { decodeBase64url, encodeBase64url } from "./utils.ts";
-import protobufjs from "protobufjs";
 
 /* eslint-disable @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 
