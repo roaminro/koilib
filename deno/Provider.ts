@@ -1,4 +1,4 @@
-import fetch from "fetch";
+import fetch from "https://esm.sh/cross-fetch@3.1.5";
 import {
   BlockJson,
   TransactionJson,

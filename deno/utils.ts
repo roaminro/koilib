@@ -1,6 +1,6 @@
-import multibase from "multibase";
-import { sha256 } from "sha256";
-import { ripemd160 } from "ripemd160";
+import multibase from "https://esm.sh/multibase@4.0.6";
+import { sha256 } from "https://esm.sh/@noble/hashes@1.1.2/sha256";
+import { ripemd160 } from "https://esm.sh/@noble/hashes@1.1.2/ripemd160";
 import { Abi, TypeField } from "./interface.ts";
 import tokenProtoJson from "./jsonDescriptors/token-proto.json" assert { type: "json" };
 

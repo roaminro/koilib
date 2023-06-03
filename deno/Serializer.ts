@@ -1,7 +1,7 @@
 import { Buffer } from "node:buffer";
 /* eslint-disable @typescript-eslint/require-await */
-import protobufjs from "protobufjs";
-import * as koinosPbToProto from "koinos-pb-to-proto";
+import protobufjs from "https://esm.sh/protobufjs@7.2.3";
+import * as koinosPbToProto from "https://esm.sh/@roamin/koinos-pb-to-proto@0.0.3";
 import { TypeField } from "./interface.ts";
 import {
   btypeDecodeValue,
