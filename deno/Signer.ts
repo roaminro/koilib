@@ -529,7 +529,7 @@ export class Signer implements SignerInterface {
     txOrBlock: TransactionJson | BlockJson,
     opts?: RecoverPublicKeyOptions
   ): Promise<string[]> {
-    const root = protobufjs.Root.fromJSON(KoinosProto);
+    const root = protobufjs.default.Root.fromJSON(KoinosProto);
     const transaction_header = root.lookupType(
       "koinos.protocol.transaction_header"
     );
@@ -652,7 +652,7 @@ export class Signer implements SignerInterface {
       tx.header = {};
     }
 
-    const root = protobufjs.Root.fromJSON(KoinosProto);
+    const root = protobufjs.default.Root.fromJSON(KoinosProto);
     const transaction_header = root.lookupType(
       "koinos.protocol.transaction_header"
     );
@@ -755,7 +755,7 @@ export class Signer implements SignerInterface {
       block.header = {};
     }
 
-    const root = protobufjs.Root.fromJSON(KoinosProto);
+    const root = protobufjs.default.Root.fromJSON(KoinosProto);
     const transaction_header = root.lookupType(
       "koinos.protocol.transaction_header"
     );

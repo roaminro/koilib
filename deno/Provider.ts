@@ -98,7 +98,7 @@ export class Provider {
 
         const url = this.rpcNodes[this.currentNodeId];
 
-        const response = await fetch(url, {
+        const response = await fetch.default(url, {
           method: "POST",
           body: JSON.stringify(body),
         });
@@ -151,7 +151,7 @@ export class Provider {
     account: string,
     deserialize = true
   ): Promise<number | string> {
-    const root = protobufjs.Root.fromJSON(KoinosProto);
+    const root = protobufjs.default.Root.fromJSON(KoinosProto);
     const value_type = root.lookupType("koinos.chain.value_type");
 
     const { nonce: nonceBase64url } = await this.call<{ nonce: string }>(
@@ -184,7 +184,7 @@ export class Provider {
    * @returns Nonce
    */
   async getNextNonce(account: string): Promise<string> {
-    const root = protobufjs.Root.fromJSON(KoinosProto);
+    const root = protobufjs.default.Root.fromJSON(KoinosProto);
     const value_type = root.lookupType("koinos.chain.value_type");
     const oldNonce = (await this.getNonce(account)) as number;
     const message = value_type.create({

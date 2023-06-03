@@ -1,5 +1,4 @@
-import { Buffer, protobufjs, koinosPbToProto } from "./deps.ts";
-import { TypeField } from "./interface.ts";
+import { protobufjs, koinosPbToProto } from "./deps.ts";
 import {
   btypeDecodeValue,
   btypeEncodeValue,
@@ -89,17 +88,17 @@ export class Serializer {
    * Protobuffers descriptor in JSON format.
    * See https://www.npmjs.com/package/protobufjs#using-json-descriptors
    */
-  types: protobufjs.INamespace | string;
+  types: protobufjs.default.INamespace | string;
 
   /**
    * Protobuffer definitions
    */
-  root: protobufjs.Root;
+  root: protobufjs.default.Root;
 
   /**
    * Default type for all serializations
    */
-  defaultType?: protobufjs.Type;
+  defaultType?: protobufjs.default.Type;
 
   /**
    * Preformat bytes for base64url, base58 or hex string
@@ -116,7 +115,7 @@ export class Serializer {
   };
 
   constructor(
-    types: protobufjs.INamespace | string,
+    types: protobufjs.default.INamespace | string,
     opts?: {
       /**
        * Default type name. Use this option when you
@@ -135,12 +134,12 @@ export class Serializer {
     this.types = types;
     if (typeof types === "string") {
       const protos = koinosPbToProto.convert(decodeBase64(types) as Buffer);
-      this.root = new protobufjs.Root();
+      this.root = new protobufjs.default.Root();
       for (const proto of protos) {
-        protobufjs.parse(proto.definition, this.root, { keepCase: true });
+        protobufjs.default.parse(proto.definition, this.root, { keepCase: true });
       }
     } else {
-      this.root = protobufjs.Root.fromJSON(types);
+      this.root = protobufjs.default.Root.fromJSON(types);
     }
     if (opts?.defaultTypeName)
       this.defaultType = this.root.lookupType(opts.defaultTypeName);
@@ -150,7 +149,7 @@ export class Serializer {
 
   btypeDecode(
     valueBtypeEncoded: Record<string, unknown> | unknown[],
-    protobufType: protobufjs.Type,
+    protobufType: protobufjs.default.Type,
     verifyChecksum: boolean
   ) {
     const valueBtypeDecoded = {} as Record<string, unknown>;
@@ -159,7 +158,7 @@ export class Serializer {
       const { options, name, type, rule } = protobufType.fields[fieldName];
       if (!valueBtypeEncoded[name]) return;
 
-      const typeField: TypeField = { type };
+      const typeField: protobufjs.default.TypeField = { type };
       if (options) {
         if (options[OP_BYTES_1])
           typeField.btype = options[OP_BYTES_1] as string;
@@ -220,7 +219,7 @@ export class Serializer {
 
   btypeEncode(
     valueBtypeDecoded: Record<string, unknown> | unknown[],
-    protobufType: protobufjs.Type,
+    protobufType: protobufjs.default.Type,
     verifyChecksum: boolean
   ) {
     const valueBtypeEncoded = {} as Record<string, unknown>;
@@ -229,7 +228,7 @@ export class Serializer {
       const { options, name, type, rule } = protobufType.fields[fieldName];
       if (!valueBtypeDecoded[name]) return;
 
-      const typeField: TypeField = { type };
+      const typeField: protobufjs.default.TypeField = { type };
       if (options) {
         if (options[OP_BYTES_1])
           typeField.btype = options[OP_BYTES_1] as string;
@@ -298,7 +297,7 @@ export class Serializer {
     typeName?: string,
     opts?: { bytesConversion?: boolean; verifyChecksum?: boolean }
   ): Promise<Uint8Array> {
-    let protobufType: protobufjs.Type;
+    let protobufType: protobufjs.default.Type;
     if (this.defaultType) protobufType = this.defaultType;
     else if (!typeName) throw new Error("no typeName defined");
     else protobufType = this.root.lookupType(typeName);
@@ -337,7 +336,7 @@ export class Serializer {
       typeof valueEncoded === "string"
         ? decodeBase64url(valueEncoded)
         : valueEncoded;
-    let protobufType: protobufjs.Type;
+    let protobufType: protobufjs.default.Type;
     if (this.defaultType) protobufType = this.defaultType;
     else if (!typeName) throw new Error("no typeName defined");
     else protobufType = this.root.lookupType(typeName);
