@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
-import { sha256, secp } from "./deps.ts";
+import { sha256, secp, protobufjs } from "./deps.ts";
 import { Provider } from "./Provider.ts";
 import {
   TransactionJson,
@@ -24,7 +24,6 @@ import {
 } from "./utils.ts";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import KoinosProto from "./jsonDescriptors/koinos-proto.json" assert { type: "json" };
-import protobufjs from "protobufjs";
 
 export interface SignerInterface {
   provider?: Provider;
