@@ -1,4 +1,4 @@
-import { ripemd160, sha256, multibase } from "./deps.ts";
+import { ripemd160, sha256, encode, decode } from "./deps.ts";
 import { Abi, TypeField } from "./interface.ts";
 import tokenProtoJson from "./jsonDescriptors/token-proto.json" assert { type: "json" };
 
@@ -26,35 +26,35 @@ export function toHexString(buffer: Uint8Array): string {
  * Encodes an Uint8Array in base58
  */
 export function encodeBase58(buffer: Uint8Array): string {
-  return new TextDecoder().decode(multibase.encode("z", buffer)).slice(1);
+  return new TextDecoder().decode(encode("z", buffer)).slice(1);
 }
 
 /**
  * Decodes a buffer formatted in base58
  */
 export function decodeBase58(bs58: string): Uint8Array {
-  return multibase.decode(`z${bs58}`);
+  return decode(`z${bs58}`);
 }
 
 /**
  * Encodes an Uint8Array in base64url
  */
 export function encodeBase64url(buffer: Uint8Array): string {
-  return new TextDecoder().decode(multibase.encode("U", buffer)).slice(1);
+  return new TextDecoder().decode(encode("U", buffer)).slice(1);
 }
 
 /**
  * Decodes a buffer formatted in base64url
  */
 export function decodeBase64url(bs64url: string): Uint8Array {
-  return multibase.decode(`U${bs64url}`);
+  return decode(`U${bs64url}`);
 }
 
 /**
  * Encodes an Uint8Array in base64
  */
 export function encodeBase64(buffer: Uint8Array): string {
-  return new TextDecoder().decode(multibase.encode("M", buffer)).slice(1);
+  return new TextDecoder().decode(encode("M", buffer)).slice(1);
 }
 
 export function multihash(buffer: Uint8Array, code = "sha2-256"): Uint8Array {
@@ -71,7 +71,7 @@ export function multihash(buffer: Uint8Array, code = "sha2-256"): Uint8Array {
  * Decodes a buffer formatted in base64
  */
 export function decodeBase64(bs64: string): Uint8Array {
-  return multibase.decode(`M${bs64}`);
+  return decode(`M${bs64}`);
 }
 
 /**
